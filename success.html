@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Received — AOTR Shop</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;min-height:100vh;display:flex;align-items:center;">
+    <div class="container">
+      <div style="max-width:480px;margin:0 auto;text-align:center;padding:60px 24px;">
+
+        <!-- Icon -->
+        <div style="width:72px;height:72px;margin:0 auto 28px;background:rgba(76,174,111,.08);border:1.5px solid rgba(76,174,111,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="30" height="30" fill="none" stroke="#4cae6f" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+
+        <!-- Heading -->
+        <h1 style="font-size:1.7rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;">
+          Payment Received
+        </h1>
+        <p style="color:var(--text-muted);font-size:.95rem;line-height:1.7;margin-bottom:28px;">
+          We'll contact you shortly to complete the trade.
+        </p>
+
+        <!-- Order number -->
+        <div id="order-block" style="display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:28px;">
+          <p style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);margin-bottom:6px;">Order number</p>
+          <p id="order-number" style="font-size:.9rem;font-family:monospace;color:var(--gold);font-weight:600;word-break:break-all;"></p>
+        </div>
+
+        <!-- Actions -->
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+          <a id="chat-btn" href="/chat" class="btn btn-primary" style="width:100%;justify-content:center;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+            </svg>
+            Go to Order Chat
+          </a>
+          <a href="/shop" class="btn btn-outline" style="width:100%;justify-content:center;">Browse More Items</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('order');
+    if (orderId) {
+      document.getElementById('order-block').style.display = 'block';
+      document.getElementById('order-number').textContent = orderId;
+      document.getElementById('chat-btn').href = `/chat?order=${orderId}`;
+    }
+  </script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

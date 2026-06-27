@@ -112,17 +112,17 @@ async function handleCheckout() {
       orderId = order.id;
     }
 
-    // Create NOWPayments invoice via our API endpoint
+    // Create Plisio invoice via our API endpoint
+    const finalOrderId = orderId || `local-${Date.now()}`;
     const invoiceRes = await fetch('/api/create-invoice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         amount: total,
-        currency: 'usdttrc20',
-        order_id: orderId || `local-${Date.now()}`,
-        order_description: `AOTR Shop order — ${items.length} item(s) for ${robloxUsername}`,
-        success_url: `${window.location.origin}/profile.html?order_success=1`,
-        cancel_url: `${window.location.origin}/cart.html`
+        order_id: finalOrderId,
+        order_description: `AOTR Shop — ${items.length} item(s) for ${robloxUsername}`,
+        success_url: `https://aotrshop.vercel.app/success?order=${finalOrderId}`,
+        fail_url:    `https://aotrshop.vercel.app/failed`
       })
     });
 
