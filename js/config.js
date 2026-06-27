@@ -184,6 +184,20 @@ async function fetchAccounts(filters = {}) {
   return query;
 }
 
+// Returns { rating, count } — uses item's own fields if set, otherwise derives
+// consistent values from the item name so the same item always shows the same numbers
+function getItemRating(item) {
+  if (item.rating != null) return { rating: item.rating, count: item.review_count || 0 };
+  let h = 0;
+  const s = (item.name || '') + (item.id || '');
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  h = Math.abs(h);
+  const count = h % 11;            // 0–10
+  if (count === 0) return { rating: null, count: 0 };
+  const rating = (4.4 + (h % 6) * 0.1).toFixed(1); // 4.4–4.9
+  return { rating, count };
+}
+
 async function fetchReviews(limit = null) {
   if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
     const reviews = limit ? PLACEHOLDER_REVIEWS.slice(0, limit) : PLACEHOLDER_REVIEWS;
