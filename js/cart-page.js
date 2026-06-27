@@ -61,6 +61,12 @@ function updateSummary(items) {
   document.getElementById('summary-items').textContent = items.length;
   document.getElementById('summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
   document.getElementById('summary-total').textContent = `$${subtotal.toFixed(2)}`;
+
+  const checkoutBtn  = document.getElementById('checkout-btn');
+  const minOrderErr  = document.getElementById('min-order-error');
+  const belowMin     = subtotal < 5;
+  if (checkoutBtn) checkoutBtn.disabled = belowMin;
+  if (minOrderErr)  minOrderErr.style.display = belowMin ? 'block' : 'none';
 }
 
 function removeFromCart(id) {

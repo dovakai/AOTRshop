@@ -86,7 +86,7 @@
           </div>
 
           <div style="padding:12px;background:var(--gold-dim2);border:1px solid rgba(201,168,76,.1);border-radius:var(--radius);font-size:.78rem;color:var(--text-faint);line-height:1.5;">
-            Payment is processed via NOWPayments in USDT. After payment confirmation you will receive an order chat link to coordinate the in-game trade.
+            Payment is processed via Plisio in USDT. After payment confirmation you will receive an order chat link to coordinate the in-game trade.
           </div>
 
           <button class="btn btn-primary btn-full btn-lg" id="checkout-btn">
@@ -95,6 +95,12 @@
             </svg>
             Pay with USDT
           </button>
+
+          <div id="min-order-error" style="display:none;text-align:center;padding:6px 0;">
+            <p style="font-size:.8rem;color:#e05c5c;margin:0;">Minimum order amount is $5</p>
+          </div>
+
+          <p style="text-align:center;font-size:.75rem;color:var(--text-faint);margin:0;">Minimum order: $5</p>
 
           <div id="checkout-loading" style="display:none;text-align:center;padding:8px 0;">
             <div class="spinner" style="margin:0 auto;"></div>

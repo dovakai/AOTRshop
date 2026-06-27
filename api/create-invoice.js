@@ -11,6 +11,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: 'Missing required fields: amount, order_id' });
   }
 
+  if (parseFloat(amount) < 5) {
+    return res.status(400).json({ message: 'Minimum order amount is $5' });
+  }
+
   const apiKey = process.env.PLISIO_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ message: 'Plisio API key not configured.' });
