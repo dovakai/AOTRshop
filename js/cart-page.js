@@ -1,6 +1,6 @@
 // ─── Manual payment config ────────────────────────────────────────────────
 const MANUAL_WALLET = 'TDdn4fRAMc6kLi8AmQ6bfiWHTMXErCyAva';
-const DISCORD_LINK  = 'https://discord.gg/95NTfsN4P';
+const DISCORD_LINK  = 'https://discord.gg/M5aAG5TqJ8';
 // ─────────────────────────────────────────────────────────────────────────
 
 // Cart page rendering + checkout
