@@ -1,6 +1,6 @@
 // ─── Manual payment config ────────────────────────────────────────────────
-const MANUAL_WALLET = 'YOUR_USDT_TRC20_ADDRESS';       // ← paste your TRC-20 wallet here
-const DISCORD_LINK  = 'https://discord.gg/YOUR_INVITE'; // ← paste your Discord invite here
+const MANUAL_WALLET = 'TDdn4fRAMc6kLi8AmQ6bfiWHTMXErCyAva';
+const DISCORD_LINK  = 'https://discord.gg/95NTfsN4P';
 // ─────────────────────────────────────────────────────────────────────────
 
 // Cart page rendering + checkout
