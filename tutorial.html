@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial — AOTR Shop</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="tutorial">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+    <div class="container" style="padding-top:48px;padding-bottom:80px;max-width:780px;">
+
+      <div class="page-header" style="border:none;margin-bottom:40px;">
+        <h1 class="page-header-title">How to Buy</h1>
+        <p class="page-header-sub">A step-by-step guide to purchasing AOTR items from our shop.</p>
+      </div>
+
+      <div class="tutorial-steps">
+        <div class="tutorial-step">
+          <div class="tutorial-num">1</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Create an account or sign in</h3>
+            <p class="tutorial-desc">
+              Click "Sign In" in the top navigation bar to create a free account or log in. An account is required to place orders and access your order history and chat. Registration only requires an email and password.
+            </p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-num">2</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Browse items and add to cart</h3>
+            <p class="tutorial-desc">
+              Head to the Shop page to browse all available items. Use the category filters on the left to narrow down by Serums, Families, Artifacts, etc. Click "Add to Cart" on any item you want. You can add up to 9 items per order, which is the AOTR in-game trade limit.
+            </p>
+            <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="/shop.html" class="btn btn-outline btn-sm">Browse Shop</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-num">3</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Review your cart</h3>
+            <p class="tutorial-desc">
+              Open your cart by clicking the bag icon in the top navigation. You will see the AOTR trade window with all your selected items. Review item prices and trade fees. The trade fee covers the cost of preparing and executing the in-game trade.
+            </p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-num">4</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Enter your Roblox username</h3>
+            <p class="tutorial-desc">
+              In the cart, enter your exact Roblox username in the field provided. This is the account that will receive the items in-game. Double-check that the spelling and capitalization are correct before proceeding.
+            </p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-num">5</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Pay with USDT</h3>
+            <p class="tutorial-desc">
+              Click "Pay with USDT" to be redirected to the NOWPayments checkout page. Payment is accepted in USDT (Tether) via the TRC20 (Tron) network. Send the exact amount shown to the provided wallet address. Payments are typically confirmed within 5-15 minutes.
+            </p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-num">6</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Wait for order confirmation</h3>
+            <p class="tutorial-desc">
+              Once your payment is confirmed, your order status will update automatically. You will receive a link to your order chat. Check your profile page under Order History to find the chat link.
+            </p>
+            <a href="/profile.html" class="btn btn-outline btn-sm" style="margin-top:12px;display:inline-flex;">View Orders</a>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="tutorial-num">7</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Meet in-game for the trade</h3>
+            <p class="tutorial-desc">
+              The seller will contact you via the order chat with instructions. Open Roblox and join the AOTR server specified by the seller. Initiate a trade with the seller's Roblox account. Confirm the items match your order before accepting the trade. Make sure you meet the prestige, gems, and gold requirements for each item.
+            </p>
+          </div>
+        </div>
+
+        <div class="tutorial-step" style="border-bottom:none;">
+          <div class="tutorial-num">8</div>
+          <div class="tutorial-content">
+            <h3 class="tutorial-title">Leave a review</h3>
+            <p class="tutorial-desc">
+              Once your order is marked as completed, you are eligible to leave a review. Head to the Reviews page and share your experience. Your feedback helps other buyers and improves the shop.
+            </p>
+            <a href="/reviews.html" class="btn btn-outline btn-sm" style="margin-top:12px;display:inline-flex;">Leave a Review</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ teaser -->
+      <div style="margin-top:48px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+        <div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:4px;">Still have questions?</h3>
+          <p style="font-size:.875rem;color:var(--text-muted);">Check the FAQ for answers to common questions about payments, delivery, and trade fees.</p>
+        </div>
+        <a href="/faq.html" class="btn btn-primary">Read the FAQ</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

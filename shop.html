@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — AOTR Shop</title>
+  <meta name="description" content="Browse Attack on Titan Revolution items, serums, families, artifacts and more.">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="shop">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+    <div class="container" style="padding-top:36px;padding-bottom:60px;">
+
+      <div class="shop-layout">
+
+        <!-- ── Filter Sidebar ──────────────────────────────────────────── -->
+        <aside class="filter-sidebar">
+          <div class="filter-section">
+            <p class="filter-title">Category</p>
+            <label class="filter-option"><input type="radio" name="cat" value=""> All Items</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Perks"> Perks</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Serums"> Serums</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Families"> Families</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Artifacts"> Artifacts</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Market Items"> Market Items</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Cosmetics"> Cosmetics</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <div class="filter-section">
+            <p class="filter-title">Sort By Price</p>
+            <label class="filter-option"><input type="radio" name="sort" value=""> Default</label>
+            <label class="filter-option"><input type="radio" name="sort" value="price_asc"> Low to High</label>
+            <label class="filter-option"><input type="radio" name="sort" value="price_desc"> High to Low</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <button class="btn btn-ghost btn-full" id="reset-filters" style="font-size:.8rem;justify-content:flex-start;padding:8px 0;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            Reset Filters
+          </button>
+        </aside>
+
+        <!-- ── Items Main ──────────────────────────────────────────────── -->
+        <div>
+          <div class="shop-top">
+            <div class="shop-search-wrap">
+              <svg class="shop-search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
+              </svg>
+              <input type="text" class="shop-search" id="shop-search" placeholder="Search items...">
+            </div>
+            <span class="shop-count" id="shop-count"></span>
+          </div>
+
+          <!-- Active filter chips -->
+          <div id="active-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;"></div>
+
+          <div class="items-grid" id="items-grid">
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+          </div>
+
+          <div id="no-items" style="display:none;text-align:center;padding:60px 0;">
+            <p style="color:var(--text-faint);font-size:.9rem;">No items match your filters.</p>
+            <button class="btn btn-outline btn-sm" style="margin-top:16px;" onclick="document.getElementById('reset-filters').click()">Clear Filters</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/animate.js"></script>
+  <script src="/js/shop.js"></script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accounts — AOTR Shop</title>
+  <meta name="description" content="Buy AOTR accounts with high prestige, rare families, serums and more.">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="accounts">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+    <div class="container" style="padding-top:36px;padding-bottom:80px;">
+
+      <div class="page-header" style="border:none;margin-bottom:28px;">
+        <h1 class="page-header-title">AOTR Accounts</h1>
+        <p class="page-header-sub">Pre-built accounts with high prestige levels, rare families, and powerful serums already unlocked.</p>
+      </div>
+
+      <div class="shop-layout">
+
+        <!-- ── Filters ─────────────────────────────────────────────────── -->
+        <aside class="filter-sidebar">
+          <div class="filter-section">
+            <p class="filter-title">Prestige Level</p>
+            <label class="filter-option"><input type="radio" name="prestige" value=""> All</label>
+            <label class="filter-option"><input type="radio" name="prestige" value="1"> Prestige 1</label>
+            <label class="filter-option"><input type="radio" name="prestige" value="2"> Prestige 2</label>
+            <label class="filter-option"><input type="radio" name="prestige" value="3"> Prestige 3</label>
+            <label class="filter-option"><input type="radio" name="prestige" value="4"> Prestige 4</label>
+            <label class="filter-option"><input type="radio" name="prestige" value="5"> Prestige 5</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <div class="filter-section">
+            <p class="filter-title">Features</p>
+            <label class="filter-option"><input type="checkbox" id="f-legend"> Legendary+ Family</label>
+            <label class="filter-option"><input type="checkbox" id="f-thunder"> Has Thunder Spears</label>
+            <label class="filter-option"><input type="checkbox" id="f-serums"> Has Serums</label>
+            <label class="filter-option"><input type="checkbox" id="f-no-shadow"> No Shadow Ban</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <div class="filter-section">
+            <p class="filter-title">Sort By Price</p>
+            <label class="filter-option"><input type="radio" name="acc-sort" value=""> Default</label>
+            <label class="filter-option"><input type="radio" name="acc-sort" value="price_asc"> Low to High</label>
+            <label class="filter-option"><input type="radio" name="acc-sort" value="price_desc"> High to Low</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <button class="btn btn-ghost btn-full" id="reset-acc-filters" style="font-size:.8rem;justify-content:flex-start;padding:8px 0;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            Reset Filters
+          </button>
+        </aside>
+
+        <!-- ── Account cards ──────────────────────────────────────────── -->
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <span class="shop-count" id="acc-count"></span>
+          </div>
+          <div class="items-grid" id="accounts-grid">
+            <div class="skeleton" style="aspect-ratio:280/380;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:280/380;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:280/380;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:280/380;border-radius:10px;"></div>
+          </div>
+          <div id="no-accounts" style="display:none;text-align:center;padding:60px 0;">
+            <p style="color:var(--text-faint);">No accounts match your filters.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/js/animate.js"></script>
+  <script src="/js/accounts.js"></script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

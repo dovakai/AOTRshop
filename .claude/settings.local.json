@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\игрь\\\\Desktop\\\\aotrshop\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object FullName | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\Users\\\\игрь\\\\Desktop\\\\aotrshop\\\\\", \"\"\\) })",
+      "Bash(node --check js/config.js)",
+      "Bash(node --check js/cart.js)",
+      "Bash(node --check js/auth.js)",
+      "Bash(node --check js/nav.js)",
+      "Bash(node --check js/shop.js)",
+      "Bash(node --check js/item.js)",
+      "Bash(node --check js/accounts.js)",
+      "Bash(node --check js/profile.js)",
+      "Bash(node --check js/chat.js)",
+      "Bash(node --check js/reviews.js)",
+      "Bash(python -m http.server 8080)",
+      "Bash(python3 -m http.server 8080)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(Start-Process -FilePath \"py.exe\" -ArgumentList \"-m http.server 8080\" -WorkingDirectory \"C:\\\\Users\\\\игрь\\\\Desktop\\\\aotrshop\" -NoNewWindow)",
+      "PowerShell(Start-Sleep -Seconds 2; Invoke-WebRequest -Uri \"http://localhost:8080\" -UseBasicParsing -TimeoutSec 3 | Select-Object StatusCode)",
+      "PowerShell(Set-Content *)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

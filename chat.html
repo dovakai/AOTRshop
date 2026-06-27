@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Chat — AOTR Shop</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+    <div class="container" style="padding-top:28px;padding-bottom:48px;">
+
+      <div style="margin-bottom:20px;">
+        <a href="/profile.html" style="font-size:.82rem;color:var(--text-faint);display:inline-flex;align-items:center;gap:6px;transition:color .18s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-faint)'">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Back to orders
+        </a>
+      </div>
+
+      <div id="chat-auth-required" style="display:none;text-align:center;padding:80px 24px;">
+        <p style="color:var(--text-muted);margin-bottom:16px;">Sign in to view your order chat.</p>
+        <button class="btn btn-primary" onclick="AuthModal.open()">Sign In</button>
+      </div>
+
+      <div id="chat-container" style="display:none;" class="chat-layout">
+
+        <!-- Order summary panel -->
+        <div class="chat-order-panel">
+          <p style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);margin-bottom:12px;">Order Summary</p>
+          <div id="order-summary">
+            <div class="skeleton" style="height:14px;border-radius:4px;margin-bottom:8px;"></div>
+            <div class="skeleton" style="height:14px;border-radius:4px;width:70%;margin-bottom:8px;"></div>
+          </div>
+        </div>
+
+        <!-- Chat panel -->
+        <div class="chat-panel">
+          <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:.875rem;font-weight:600;">Order Chat</span>
+            <span id="order-status-badge"></span>
+          </div>
+
+          <div class="chat-messages" id="chat-messages">
+            <div class="skeleton" style="height:48px;border-radius:8px;max-width:70%;"></div>
+            <div class="skeleton" style="height:48px;border-radius:8px;max-width:60%;align-self:flex-end;"></div>
+          </div>
+
+          <div class="chat-input-area">
+            <textarea class="chat-input" id="chat-input" rows="1" placeholder="Type a message..."></textarea>
+            <button class="btn btn-primary btn-sm" id="send-msg-btn">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/js/chat.js"></script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

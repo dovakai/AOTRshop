@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — AOTR Shop</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+
+    <div id="admin-auth-gate" style="display:none;text-align:center;padding:100px 24px;">
+      <div style="display:inline-block;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:360px;width:100%;">
+        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">Admin Access</h2>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:20px;">Sign in with your admin account to continue.</p>
+        <button class="btn btn-primary btn-full" onclick="AuthModal.open()">Sign In</button>
+      </div>
+    </div>
+
+    <div id="admin-forbidden" style="display:none;text-align:center;padding:100px 24px;color:var(--text-faint);">
+      <p>You do not have admin access.</p>
+      <a href="/" class="btn btn-outline btn-sm" style="margin-top:16px;">Go Home</a>
+    </div>
+
+    <div id="admin-content" style="display:none;" class="container" style="padding-top:28px;padding-bottom:80px;">
+      <div style="padding-top:28px;padding-bottom:80px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+          <h1 style="font-size:1.4rem;font-weight:800;letter-spacing:-.02em;">Admin Panel</h1>
+          <span style="font-size:.8rem;color:var(--text-faint);">Logged in as admin</span>
+        </div>
+
+        <div class="admin-layout">
+          <nav class="admin-nav">
+            <div class="admin-nav-item active" data-panel="orders">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/>
+              </svg>
+              Orders
+            </div>
+            <div class="admin-nav-item" data-panel="items">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18"/>
+              </svg>
+              Items
+            </div>
+            <div class="admin-nav-item" data-panel="accounts">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+              </svg>
+              Accounts
+            </div>
+            <div class="admin-nav-item" data-panel="add-item">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+              Add Item
+            </div>
+          </nav>
+
+          <div>
+            <!-- Orders panel -->
+            <div class="admin-panel active" id="panel-orders">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h2 style="font-size:1.1rem;font-weight:700;">All Orders</h2>
+                <button class="btn btn-outline btn-sm" onclick="loadAdminOrders()">Refresh</button>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;overflow-x:auto;">
+                <table class="admin-table" id="orders-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Roblox User</th>
+                      <th>Items</th>
+                      <th>Total</th>
+                      <th>Payment</th>
+                      <th>Delivery</th>
+                      <th>Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-tbody">
+                    <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-faint);">Loading...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Items panel -->
+            <div class="admin-panel" id="panel-items">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h2 style="font-size:1.1rem;font-weight:700;">All Items</h2>
+                <button class="btn btn-outline btn-sm" onclick="loadAdminItems()">Refresh</button>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;overflow-x:auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Trade Tax</th>
+                      <th>Stock</th>
+                      <th>Featured</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="items-tbody">
+                    <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-faint);">Loading...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Accounts panel -->
+            <div class="admin-panel" id="panel-accounts">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <h2 style="font-size:1.1rem;font-weight:700;">Accounts for Sale</h2>
+                <button class="btn btn-outline btn-sm" onclick="loadAdminAccounts()">Refresh</button>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;overflow-x:auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Prestige</th>
+                      <th>Price</th>
+                      <th>Features</th>
+                      <th>Stock</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="accounts-tbody">
+                    <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-faint);">Loading...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Add item panel -->
+            <div class="admin-panel" id="panel-add-item">
+              <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">Add New Item</h2>
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;max-width:560px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label class="form-label">Item Name</label>
+                    <input class="form-input" type="text" id="new-name" placeholder="e.g. Colossal Titan Serum">
+                  </div>
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label class="form-label">Category</label>
+                    <select class="form-input" id="new-cat">
+                      <option value="">Select category</option>
+                      <option>Perks</option><option>Serums</option><option>Families</option>
+                      <option>Artifacts</option><option>Market Items</option><option>Cosmetics</option>
+                      <option>Scrolls &amp; Shards</option>
+                    </select>
+                  </div>
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" id="new-desc" rows="3" placeholder="Item description..."></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Price (USD)</label>
+                    <input class="form-input" type="number" id="new-price" placeholder="0.00" step="0.01" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Required Prestige</label>
+                    <input class="form-input" type="number" id="new-prestige" placeholder="0" min="0" max="5">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Required Gems</label>
+                    <input class="form-input" type="number" id="new-gems" placeholder="0" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Required Gold</label>
+                    <input class="form-input" type="number" id="new-gold" placeholder="0" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Image URL</label>
+                    <input class="form-input" type="url" id="new-image" placeholder="https://...">
+                  </div>
+                  <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-top:20px;">
+                    <input type="checkbox" id="new-featured" style="accent-color:var(--gold);width:16px;height:16px;">
+                    <label for="new-featured" style="font-size:.875rem;color:var(--text-muted);">Featured (HOT)</label>
+                  </div>
+                </div>
+                <div class="form-error" id="add-item-error" style="margin-bottom:8px;"></div>
+                <button class="btn btn-primary" id="add-item-btn" style="margin-top:12px;">Add Item</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/js/admin.js"></script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart — AOTR Shop</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+    <div class="container" style="padding-top:36px;padding-bottom:80px;">
+
+      <h1 style="font-size:1.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;">Your Cart</h1>
+      <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:32px;">Max 9 items per trade (AOTR trade limit).</p>
+
+      <!-- Empty state -->
+      <div id="cart-empty" style="display:none;" class="cart-empty">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color:var(--text-faint);margin:0 auto 16px;opacity:.3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <div class="cart-empty-title">Your cart is empty</div>
+        <div class="cart-empty-sub">Browse the shop to add items to your cart.</div>
+        <a href="/shop.html" class="btn btn-primary">Browse Shop</a>
+      </div>
+
+      <!-- Cart content -->
+      <div id="cart-content" class="cart-layout">
+
+        <!-- Trade window (left) -->
+        <div class="trade-window">
+          <div class="trade-header">
+            <span class="trade-header-title">You Receive</span>
+            <span id="trade-slot-count" style="font-size:.78rem;color:var(--text-faint);">0 / 9 slots</span>
+          </div>
+
+          <!-- 9 slots grid -->
+          <div class="trade-slots" id="trade-slots">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div class="trade-footer">
+            <div class="trade-tax-row">
+              <span class="trade-tax-label">Gem Tax</span>
+              <span class="trade-tax-val" id="cart-gem-tax">0 gems</span>
+            </div>
+            <div class="trade-tax-row">
+              <span class="trade-tax-label">Gold Tax</span>
+              <span class="trade-tax-val" id="cart-gold-tax">0 gold</span>
+            </div>
+            <div class="trade-tax-row">
+              <span class="trade-tax-label">Prestige Required</span>
+              <span class="trade-tax-val" id="cart-prestige-req">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary + Checkout (right) -->
+        <div class="cart-summary">
+          <h3 class="cart-summary-title">Order Summary</h3>
+
+          <div class="summary-row">
+            <span class="label">Items</span>
+            <span class="val" id="summary-items">0</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Items cost</span>
+            <span class="val" id="summary-subtotal">$0.00</span>
+          </div>
+          <div class="summary-row total">
+            <span class="label" style="font-weight:600;color:var(--text);">Total</span>
+            <span class="val" id="summary-total">$0.00</span>
+          </div>
+
+          <div class="roblox-input-wrap">
+            <label class="roblox-label" for="roblox-username">Roblox Username (required)</label>
+            <input type="text" class="form-input" id="roblox-username" placeholder="YourRobloxUsername" autocomplete="off">
+            <div class="form-error" id="roblox-error">Please enter your Roblox username.</div>
+          </div>
+
+          <div style="padding:12px;background:var(--gold-dim2);border:1px solid rgba(201,168,76,.1);border-radius:var(--radius);font-size:.78rem;color:var(--text-faint);line-height:1.5;">
+            Payment is processed via NOWPayments in USDT. After payment confirmation you will receive an order chat link to coordinate the in-game trade.
+          </div>
+
+          <button class="btn btn-primary btn-full btn-lg" id="checkout-btn">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            Pay with USDT
+          </button>
+
+          <div id="checkout-loading" style="display:none;text-align:center;padding:8px 0;">
+            <div class="spinner" style="margin:0 auto;"></div>
+            <p style="font-size:.8rem;color:var(--text-faint);margin-top:8px;">Creating payment invoice...</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Payment success message -->
+      <div id="payment-success" style="display:none;max-width:500px;margin:0 auto;text-align:center;padding:60px 24px;">
+        <div style="width:60px;height:60px;background:rgba(76,174,111,.1);border:1px solid rgba(76,174,111,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+          <svg width="24" height="24" fill="none" stroke="#4cae6f" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:8px;">Payment Initiated</h2>
+        <p style="color:var(--text-muted);font-size:.9rem;line-height:1.7;margin-bottom:24px;">
+          Complete your USDT payment on the NOWPayments page. Once confirmed, you will be contacted via order chat to coordinate your in-game trade.
+        </p>
+        <a href="/profile.html" class="btn btn-outline">View Order History</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/js/cart-page.js"></script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>

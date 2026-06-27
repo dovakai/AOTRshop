@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — AOTR Shop</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="faq">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+
+  <div style="padding-top:64px;">
+    <div class="container" style="padding-top:48px;padding-bottom:80px;max-width:760px;">
+
+      <div class="page-header" style="border:none;margin-bottom:40px;">
+        <h1 class="page-header-title">Frequently Asked Questions</h1>
+        <p class="page-header-sub">Answers to common questions about payments, trades, and delivery.</p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How does payment work?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              We accept USDT (Tether) cryptocurrency via the TRC20 (Tron) network. When you click "Pay with USDT" at checkout, you are redirected to NOWPayments — a trusted crypto payment processor. You will receive a wallet address and the exact amount to send. Payments are typically confirmed on-chain within 5-15 minutes. We do not accept PayPal, credit cards, or other cryptocurrencies at this time.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How long does delivery take?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Most orders are delivered within 30 minutes of payment confirmation, though times can vary depending on server availability. After payment is confirmed, the seller will contact you via the order chat to arrange an in-game meeting. We are available most hours of the day. If delivery takes more than 2 hours, please contact us via Discord.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What is a trade fee, and why is it charged?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              A trade fee is a small charge added to each item to cover the cost of sourcing, preparing, and executing the in-game trade on your behalf. The trade fee varies by item rarity and is always displayed on each item's listing page before you add it to your cart. The fee is included in your total at checkout.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What requirements do I need to receive items?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Each item has specific in-game requirements to receive it via trade. These are listed on every item page: minimum prestige level, gems, and gold. You must meet all listed requirements before the trade can be completed. If you are unsure whether you qualify, contact us before purchasing.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What if I do not receive my items?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              If you have paid and did not receive your items within 2 hours, please open your order chat and message us there, or contact us directly on Discord. We will investigate and either complete the delivery or issue a refund if we are unable to fulfill the order. We take every order seriously and guarantee delivery for all valid orders.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" id="refund">
+          <div class="faq-question">
+            Do you accept refunds?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Refunds are issued if we are unable to deliver your order for any reason on our end. Refunds are not issued once an order has been delivered in-game, as the transaction cannot be reversed. If you purchased an item by mistake, contact us immediately via Discord before delivery begins and we will do our best to accommodate. Cryptocurrency transactions are inherently non-refundable once sent to us, but we will work with you fairly.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" id="privacy">
+          <div class="faq-question">
+            Privacy Policy — how is my data used?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              We collect your email address (for your account) and your Roblox username (for order delivery). Order data is stored securely in Supabase. We do not sell or share your data with third parties. Your Roblox username is only used to identify you for in-game trade and is stored with your order record. Payment processing is handled by NOWPayments and we do not store cryptocurrency wallet addresses or payment credentials.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" id="terms">
+          <div class="faq-question">
+            Terms of Service — what should I know?
+            <span class="faq-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              By purchasing from AOTRShop you acknowledge that you are using this service at your own risk. Trading items in Roblox games is subject to the game's own rules. We are not responsible for actions taken by Roblox or the game developers against your account. We do not provide accounts or items obtained through exploits or cheats. All items sold are legitimately obtained through normal gameplay. AOTRShop is not affiliated with Roblox Corporation or the creators of Attack on Titan Revolution.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:48px;text-align:center;">
+        <p style="color:var(--text-muted);font-size:.9rem;">Still have a question not answered here?</p>
+        <a href="https://discord.gg/your-server" target="_blank" class="btn btn-outline" style="margin-top:12px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.033.05a19.868 19.868 0 0 0 5.993 3.029.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.029.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+          </svg>
+          Contact us on Discord
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script>
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // Auto-open if hash matches an anchor id
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const target = document.getElementById(hash);
+      if (target) {
+        target.classList.add('open');
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+      }
+    }
+  </script>
+  <script src="//code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>
