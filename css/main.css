@@ -450,11 +450,13 @@ h4 { font-size: .95rem; font-weight: 600; }
 .item-rating {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   margin-top: 3px;
+  font-size: .71rem;
+  line-height: 1;
 }
-.item-stars { color: #e8b84b; font-size: .75rem; letter-spacing: -.5px; line-height: 1; }
-.item-rating-count { font-size: .68rem; color: var(--text-muted); }
+.item-rating-val { color: var(--text); font-weight: 600; }
+.item-rating-count { color: var(--text-faint); }
 
 .item-price-row {
   display: flex;

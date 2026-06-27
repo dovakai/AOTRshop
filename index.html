@@ -231,26 +231,6 @@
       </div>
     </section>
 
-    <!-- ══ TRUSTPILOT ════════════════════════════════════════════════════ -->
-    <section style="background:#080808;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 0;">
-      <div class="container" style="text-align:center;">
-        <div style="margin-bottom:20px;">
-          <h2 class="section-title">What Customers Say</h2>
-          <p style="color:var(--text-muted);font-size:.85rem;margin-top:6px;">Verified reviews from real buyers.</p>
-        </div>
-        <!-- Trustpilot Widget — replace YOUR_BUSINESS_ID with your actual Trustpilot Business Unit ID -->
-        <div class="trustpilot-widget"
-             data-locale="en-US"
-             data-template-id="56278e9abfbbba0bdcd568bc"
-             data-businessunit-id="YOUR_BUSINESS_ID"
-             data-style-height="52px"
-             data-style-width="100%"
-             data-theme="dark">
-          <a href="https://www.trustpilot.com" target="_blank" rel="noopener" style="color:var(--gold);">Read our reviews on Trustpilot</a>
-        </div>
-        <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
-      </div>
-    </section>
 
     <!-- ══ FOOTER ══════════════════════════════════════════════════════════ -->
     <footer id="footer">
@@ -325,7 +305,7 @@
           <div class="item-body">
             <span class="item-cat">${item.category}</span>
             <span class="item-name">${item.name}</span>
-            ${item.rating ? `<div class="item-rating"><span class="item-stars">${'★'.repeat(Math.round(item.rating))}${'☆'.repeat(5 - Math.round(item.rating))}</span><span class="item-rating-count">${item.rating} (${item.review_count})</span></div>` : ''}
+            ${item.rating ? `<div class="item-rating">⭐ <span class="item-rating-val">${item.rating}</span><span class="item-rating-count"> (${item.review_count} reviews)</span></div>` : ''}
             <div class="item-price-row">
               <span class="item-price">$${item.price_usd.toFixed(2)}</span>
               ${(item.required_gems > 0 || item.required_gold > 0) ? `<span class="item-fee">Trade tax: ${[item.required_gems > 0 ? item.required_gems + ' gems' : null, item.required_gold > 0 ? item.required_gold + ' gold' : null].filter(Boolean).join(' / ')}</span>` : ''}

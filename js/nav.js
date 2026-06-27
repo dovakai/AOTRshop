@@ -120,3 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(`.nav-links a[data-page="${page}"]`)?.classList.add('active');
   }
 });
+
+// Trustpilot review invitation
+(function(w,d,s,r,n){w.TrustpilotObject=n;w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
+  var a=d.createElement(s);a.async=1;a.src=r;a.type='text/java'+s;var f=d.getElementsByTagName(s)[0];
+  f.parentNode.insertBefore(a,f)})(window,document,'script','https://invitejs.trustpilot.com/tp.min.js','tp');
+tp('register', '9VNpjmaDr9fZXgQF');
