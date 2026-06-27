@@ -15,73 +15,73 @@ const PLACEHOLDER_ITEMS = [
     id: 'p1', name: 'Colossal Titan Serum', category: 'Serums',
     description: 'Rare serum that grants the Colossal Titan ability. One of the most powerful and sought-after serums in all of AOTR.',
     price_usd: 4.99, required_prestige: 2, required_gems: 150, required_gold: 800,
-    image_url: null, in_stock: true, is_featured: true
+    image_url: null, in_stock: true, is_featured: true, rating: 4.9, review_count: 312
   },
   {
     id: 'p2', name: 'Ackerman Family', category: 'Families',
     description: 'Join the legendary Ackerman bloodline. Grants exceptional combat abilities, boosted stats, and unique titan-slaying perks.',
     price_usd: 5.99, required_prestige: 2, required_gems: 250, required_gold: 1000,
-    image_url: null, in_stock: true, is_featured: true
+    image_url: null, in_stock: true, is_featured: true, rating: 4.8, review_count: 189
   },
   {
     id: 'p3', name: 'Female Titan Serum', category: 'Serums',
     description: 'Transform into the powerful Female Titan with crystal hardening ability and titan-calling scream.',
     price_usd: 3.99, required_prestige: 1, required_gems: 100, required_gold: 600,
-    image_url: null, in_stock: true, is_featured: true
+    image_url: null, in_stock: true, is_featured: true, rating: 4.7, review_count: 143
   },
   {
     id: 'p4', name: 'Thunder Spear Set', category: 'Artifacts',
     description: 'Full set of 10 Thunder Spears. Devastating explosive weapons used by the Survey Corps anti-titan squads.',
     price_usd: 2.49, required_prestige: 1, required_gems: 50, required_gold: 300,
-    image_url: null, in_stock: true, is_featured: true
+    image_url: null, in_stock: true, is_featured: true, rating: 4.6, review_count: 97
   },
   {
     id: 'p5', name: 'Attack Titan Serum', category: 'Serums',
     description: 'The legendary Attack Titan serum. Harness the power to see the memories of past and future inheritors.',
     price_usd: 6.99, required_prestige: 3, required_gems: 300, required_gold: 1500,
-    image_url: null, in_stock: true, is_featured: true
+    image_url: null, in_stock: true, is_featured: true, rating: 4.9, review_count: 445
   },
   {
     id: 'p6', name: 'Beast Titan Serum', category: 'Serums',
     description: 'Become the towering Beast Titan with long-range crystalline projectile attack ability.',
     price_usd: 5.49, required_prestige: 3, required_gems: 200, required_gold: 1200,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.7, review_count: 201
   },
   {
     id: 'p7', name: 'Survey Corps Perk', category: 'Perks',
     description: 'Join the Survey Corps for exclusive bonuses to ODM gear speed, stamina regen, and vertical maneuver distance.',
     price_usd: 1.99, required_prestige: 0, required_gems: 25, required_gold: 150,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.5, review_count: 68
   },
   {
     id: 'p8', name: 'Founder Crystal', category: 'Market Items',
     description: 'A rare crystalline shard imbued with remnant power of the Founding Titan. Used in advanced crafting recipes.',
     price_usd: 3.49, required_prestige: 2, required_gems: 75, required_gold: 500,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.6, review_count: 112
   },
   {
     id: 'p9', name: 'Armored Titan Serum', category: 'Serums',
     description: 'Armored Titan serum granting full-body hardening and near-impenetrable defense capabilities.',
     price_usd: 4.49, required_prestige: 2, required_gems: 175, required_gold: 900,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.7, review_count: 156
   },
   {
     id: 'p10', name: 'Military Police Perk', category: 'Perks',
     description: 'Exclusive Military Police perk granting access to inner-wall districts and increased gold income.',
     price_usd: 1.49, required_prestige: 0, required_gems: 20, required_gold: 100,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.5, review_count: 54
   },
   {
     id: 'p11', name: 'Titan Cosmetic Bundle', category: 'Cosmetics',
     description: 'Rare cosmetic set including titan-skin trail, nape glow effect, and transform animation.',
     price_usd: 2.99, required_prestige: 1, required_gems: 60, required_gold: 400,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.6, review_count: 88
   },
   {
     id: 'p12', name: 'Market Coins x500', category: 'Market Items',
     description: 'Bundle of 500 in-game market coins used for purchasing limited rotational items from the in-game shop.',
     price_usd: 3.99, required_prestige: 0, required_gems: 0, required_gold: 0,
-    image_url: null, in_stock: true, is_featured: false
+    image_url: null, in_stock: true, is_featured: false, rating: 4.4, review_count: 43
   }
 ];
 

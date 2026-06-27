@@ -8,7 +8,6 @@ const NAV_HTML = `
     <ul class="nav-links">
       <li><a href="/shop.html" data-page="shop">Shop</a></li>
       <li><a href="/accounts.html" data-page="accounts">Accounts</a></li>
-      <li><a href="/reviews.html" data-page="reviews">Reviews</a></li>
       <li><a href="/tutorial.html" data-page="tutorial">Tutorial</a></li>
       <li><a href="/faq.html" data-page="faq">FAQ</a></li>
     </ul>
