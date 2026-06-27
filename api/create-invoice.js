@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     api_key:         apiKey,
     source_currency: 'USD',
     source_amount:   String(parseFloat(amount).toFixed(2)),
-    currency:        'USDT_SOL',
+    currency:        'USDT_BSC',
     order_number:    String(order_id),
     order_name:      order_description || 'AOTR Shop order',
     callback_url:    'https://aotrshop.vercel.app/api/plisio-webhook',
