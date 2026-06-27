@@ -67,11 +67,13 @@ function updateSummary(items) {
   document.getElementById('summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
   document.getElementById('summary-total').textContent = `$${subtotal.toFixed(2)}`;
 
-  const checkoutBtn  = document.getElementById('checkout-btn');
-  const minOrderErr  = document.getElementById('min-order-error');
-  const belowMin     = subtotal < 5;
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const minOrderErr = document.getElementById('min-order-error');
+  const minHint     = document.getElementById('min-order-hint');
+  const belowMin    = currentPayMethod === 'auto' && subtotal < 5;
   if (checkoutBtn) checkoutBtn.disabled = belowMin;
-  if (minOrderErr)  minOrderErr.style.display = belowMin ? 'block' : 'none';
+  if (minOrderErr) minOrderErr.style.display = belowMin ? 'block' : 'none';
+  if (minHint)     minHint.style.display = currentPayMethod === 'auto' ? 'block' : 'none';
 }
 
 function removeFromCart(id) {
@@ -88,6 +90,7 @@ function selectPayMethod(method) {
   document.getElementById('pm-auto').classList.toggle('active', method === 'auto');
   const btnText = document.getElementById('checkout-btn-text');
   if (btnText) btnText.textContent = method === 'auto' ? 'Pay with Crypto (Auto)' : 'Pay via Discord';
+  updateSummary(Cart.get());
 }
 
 // ─── Manual payment modal ──────────────────────────────────────────────────
