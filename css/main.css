@@ -1606,6 +1606,104 @@ h4 { font-size: .95rem; font-weight: 600; }
 
 .cart-summary-title { font-size: 1rem; font-weight: 700; }
 
+/* === PAYMENT METHOD CARDS ================================= */
+.pay-methods { display: flex; flex-direction: column; gap: 8px; }
+
+.pay-method-card {
+  display: block;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  background: var(--bg2);
+}
+.pay-method-card:hover  { border-color: rgba(201,168,76,.4); }
+.pay-method-card.active { border-color: var(--gold); background: var(--gold-dim2); }
+
+.pay-method-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pay-method-icon {
+  width: 34px; height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.pay-method-info   { flex: 1; min-width: 0; }
+.pay-method-title  { font-size: .85rem; font-weight: 600; color: var(--text); display: block; margin-bottom: 2px; }
+.pay-method-sub    { font-size: .72rem; color: var(--text-faint); display: block; }
+
+.pay-method-radio  {
+  width: 17px; height: 17px;
+  border: 2px solid var(--border2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s;
+}
+.pay-method-card.active .pay-method-radio { border-color: var(--gold); }
+.pay-method-radio-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity .15s;
+}
+.pay-method-card.active .pay-method-radio-dot { opacity: 1; }
+
+.pay-badge-rec {
+  font-size: .62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: #000; background: var(--gold);
+  padding: 2px 7px; border-radius: 20px;
+  flex-shrink: 0;
+}
+
+/* Manual payment modal */
+#manual-pay-modal {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  align-items: center; justify-content: center;
+}
+#manual-pay-modal.open { display: flex; }
+
+.manual-steps { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+.manual-step  {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: .85rem; color: var(--text-muted); line-height: 1.55;
+}
+.manual-step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  color: var(--gold); font-size: .7rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.wallet-copy-row {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 12px;
+  margin-top: 8px;
+}
+.wallet-addr {
+  flex: 1; font-family: monospace; font-size: .78rem;
+  color: var(--gold); word-break: break-all; line-height: 1.4;
+}
+.wallet-copy-btn {
+  padding: 5px 12px; font-size: .72rem; font-weight: 600;
+  border: 1px solid var(--border2); border-radius: var(--radius);
+  background: var(--card); color: var(--text-muted);
+  cursor: pointer; white-space: nowrap; transition: all .18s;
+  flex-shrink: 0;
+}
+.wallet-copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+
 .summary-row {
   display: flex;
   align-items: center;

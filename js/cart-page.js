@@ -1,4 +1,9 @@
-// Cart page rendering + NOWPayments checkout
+// ─── Manual payment config ────────────────────────────────────────────────
+const MANUAL_WALLET = 'YOUR_USDT_TRC20_ADDRESS';       // ← paste your TRC-20 wallet here
+const DISCORD_LINK  = 'https://discord.gg/YOUR_INVITE'; // ← paste your Discord invite here
+// ─────────────────────────────────────────────────────────────────────────
+
+// Cart page rendering + checkout
 
 function renderTradeSlots() {
   const items = Cart.get();
@@ -74,6 +79,43 @@ function removeFromCart(id) {
   renderTradeSlots();
 }
 
+// ─── Payment method selection ──────────────────────────────────────────────
+let currentPayMethod = 'manual';
+
+function selectPayMethod(method) {
+  currentPayMethod = method;
+  document.getElementById('pm-manual').classList.toggle('active', method === 'manual');
+  document.getElementById('pm-auto').classList.toggle('active', method === 'auto');
+  const btnText = document.getElementById('checkout-btn-text');
+  if (btnText) btnText.textContent = method === 'auto' ? 'Pay with Crypto (Auto)' : 'Pay via Discord';
+}
+
+// ─── Manual payment modal ──────────────────────────────────────────────────
+function openManualModal() {
+  const items = Cart.get();
+  const total = items.reduce((s, i) => s + i.price_usd, 0).toFixed(2);
+  document.getElementById('modal-amount').textContent = `$${total}`;
+  document.getElementById('modal-wallet').textContent = MANUAL_WALLET;
+  document.getElementById('discord-btn').href = DISCORD_LINK;
+  document.getElementById('copy-btn').textContent = 'Copy';
+  document.getElementById('manual-pay-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeManualModal() {
+  document.getElementById('manual-pay-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function copyWallet() {
+  navigator.clipboard.writeText(MANUAL_WALLET).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+
+// ─── Checkout ──────────────────────────────────────────────────────────────
 async function handleCheckout() {
   const robloxUsername = document.getElementById('roblox-username')?.value.trim();
   const robloxError = document.getElementById('roblox-error');
@@ -93,42 +135,47 @@ async function handleCheckout() {
   const items = Cart.get();
   if (!items.length) { showToast('Your cart is empty.', 'error'); return; }
 
+  // Manual Discord payment — just show the modal
+  if (currentPayMethod === 'manual') {
+    openManualModal();
+    return;
+  }
+
+  // Auto Plisio payment
   const checkoutBtn = document.getElementById('checkout-btn');
-  const loadingEl = document.getElementById('checkout-loading');
+  const loadingEl   = document.getElementById('checkout-loading');
 
   checkoutBtn.style.display = 'none';
-  loadingEl.style.display = 'block';
+  loadingEl.style.display   = 'block';
 
   const total = items.reduce((s, i) => s + i.price_usd, 0).toFixed(2);
 
   try {
-    // Create order in Supabase
     let orderId = null;
     if (SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
       const { data: order, error } = await db.from('orders').insert({
-        user_id: Auth.currentUser.id,
-        items_json: JSON.stringify(items),
-        roblox_username: robloxUsername,
-        total_usd: parseFloat(total),
-        payment_status: 'pending',
-        delivery_status: 'pending'
+        user_id:          Auth.currentUser.id,
+        items_json:       JSON.stringify(items),
+        roblox_username:  robloxUsername,
+        total_usd:        parseFloat(total),
+        payment_status:   'pending',
+        delivery_status:  'pending'
       }).select().single();
 
       if (error) throw new Error(error.message);
       orderId = order.id;
     }
 
-    // Create Plisio invoice via our API endpoint
     const finalOrderId = orderId || `local-${Date.now()}`;
     const invoiceRes = await fetch('/api/create-invoice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        amount: total,
-        order_id: finalOrderId,
+        amount:            total,
+        order_id:          finalOrderId,
         order_description: `AOTR Shop — ${items.length} item(s) for ${robloxUsername}`,
-        success_url: `https://aotrshop.vercel.app/success?order=${finalOrderId}`,
-        fail_url:    `https://aotrshop.vercel.app/failed`
+        success_url:       `https://aotrshop.vercel.app/success?order=${finalOrderId}`,
+        fail_url:          `https://aotrshop.vercel.app/failed`
       })
     });
 
@@ -138,13 +185,12 @@ async function handleCheckout() {
     }
 
     const { payment_url } = await invoiceRes.json();
-
     Cart.clear();
     window.location.href = payment_url;
 
   } catch (err) {
     checkoutBtn.style.display = '';
-    loadingEl.style.display = 'none';
+    loadingEl.style.display   = 'none';
     showToast(err.message || 'Checkout failed. Please try again.', 'error');
   }
 }

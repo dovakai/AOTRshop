@@ -85,15 +85,49 @@
             <div class="form-error" id="roblox-error">Please enter your Roblox username.</div>
           </div>
 
-          <div style="padding:12px;background:var(--gold-dim2);border:1px solid rgba(201,168,76,.1);border-radius:var(--radius);font-size:.78rem;color:var(--text-faint);line-height:1.5;">
-            Payment is processed via Plisio in USDT. After payment confirmation you will receive an order chat link to coordinate the in-game trade.
+          <!-- Payment method selector -->
+          <div class="pay-methods">
+
+            <!-- Manual (Discord) — default -->
+            <label class="pay-method-card active" id="pm-manual" onclick="selectPayMethod('manual')">
+              <div class="pay-method-row">
+                <div class="pay-method-icon">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+                  </svg>
+                </div>
+                <div class="pay-method-info">
+                  <span class="pay-method-title">Pay via Discord</span>
+                  <span class="pay-method-sub">0% fee · Manual · 5–15 min delivery</span>
+                </div>
+                <span class="pay-badge-rec">Recommended</span>
+                <div class="pay-method-radio"><div class="pay-method-radio-dot"></div></div>
+              </div>
+            </label>
+
+            <!-- Auto (Plisio) -->
+            <label class="pay-method-card" id="pm-auto" onclick="selectPayMethod('auto')">
+              <div class="pay-method-row">
+                <div class="pay-method-icon">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+                  </svg>
+                </div>
+                <div class="pay-method-info">
+                  <span class="pay-method-title">Pay with Crypto (Auto)</span>
+                  <span class="pay-method-sub">Instant · ~$1.50 network fee · USDT TRC-20</span>
+                </div>
+                <div class="pay-method-radio"><div class="pay-method-radio-dot"></div></div>
+              </div>
+            </label>
+
           </div>
 
           <button class="btn btn-primary btn-full btn-lg" id="checkout-btn">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
             </svg>
-            Pay with USDT
+            <span id="checkout-btn-text">Pay via Discord</span>
           </button>
 
           <div id="min-order-error" style="display:none;text-align:center;padding:6px 0;">
@@ -124,6 +158,54 @@
         <a href="/profile.html" class="btn btn-outline">View Order History</a>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Manual payment modal -->
+  <div id="manual-pay-modal">
+    <div class="modal-overlay" onclick="closeManualModal()"></div>
+    <div class="modal-box" style="max-width:440px;width:92%;max-height:90vh;overflow-y:auto;">
+      <button class="modal-close" onclick="closeManualModal()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <h2 class="modal-title">Manual Payment</h2>
+
+      <div class="manual-steps">
+        <div class="manual-step">
+          <div class="manual-step-num">1</div>
+          <div>Send exactly <strong id="modal-amount" style="color:var(--gold);"></strong> USDT TRC-20 to this wallet address:</div>
+        </div>
+
+        <div class="wallet-copy-row">
+          <span class="wallet-addr" id="modal-wallet"></span>
+          <button class="wallet-copy-btn" id="copy-btn" onclick="copyWallet()">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:4px;">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <div class="manual-step">
+          <div class="manual-step-num">2</div>
+          <div>Open a ticket in our Discord and send the <strong style="color:var(--text);">screenshot of the transaction</strong> + your <strong style="color:var(--text);">Roblox username</strong>.</div>
+        </div>
+
+        <div class="manual-step">
+          <div class="manual-step-num">3</div>
+          <div>We will verify the payment and deliver your items within <strong style="color:var(--text);">5–15 minutes</strong>.</div>
+        </div>
+      </div>
+
+      <a id="discord-btn" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
+          <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
+        </svg>
+        Open Discord
+      </a>
     </div>
   </div>
 
