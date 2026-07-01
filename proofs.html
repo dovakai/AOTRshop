@@ -10,49 +10,115 @@
   <meta name="trustpilot-one-time-domain-verification-id" content="9e197152-6270-4623-a242-e3dfde22233b"/>
   <link rel="stylesheet" href="/css/main.css">
   <style>
+    /* ── Grid ── */
     .proof-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
+
+    /* ── Card ── */
     .proof-card {
       flex-direction: column;
-      cursor: pointer;
+      cursor: default;
     }
+
+    /* ── Image area ── */
     .proof-card-img {
       width: 100%;
-      height: 260px;
+      height: 220px;
       border-right: none;
       border-bottom: 1px solid var(--border);
       position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
     .proof-card-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform .35s ease;
     }
-    .proof-delivered-badge {
+    .proof-card-img:hover img { transform: scale(1.04); }
+
+    /* ── AOT animated badge ── */
+    .aotr-badge-wrap {
       position: absolute;
       top: 10px;
       left: 10px;
-      background: rgba(34,197,94,.15);
-      border: 1px solid rgba(34,197,94,.35);
-      color: #22c55e;
-      font-size: .62rem;
-      font-weight: 700;
-      padding: 3px 9px;
+      border-radius: 5px;
+      padding: 1.5px;
+      background: linear-gradient(90deg, #7a0000, #c0392b, #ff4500, #ff7043, #c0392b, #7a0000);
+      background-size: 300% 100%;
+      animation: aotr-shimmer 2.5s linear infinite;
+      z-index: 2;
+    }
+    .aotr-badge {
+      display: block;
+      background: rgba(6,6,10,.92);
       border-radius: 4px;
+      padding: 3px 8px;
+      font-size: .58rem;
+      font-weight: 800;
+      color: #fff;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: .07em;
+      white-space: nowrap;
     }
-    .proof-card-body {
-      padding: 16px 18px 18px;
-      gap: 7px;
+    @keyframes aotr-shimmer {
+      0%   { background-position: 0%   50%; }
+      100% { background-position: 300% 50%; }
     }
-    .proof-card-meta {
-      gap: 12px;
+
+    /* ── Body ── */
+    .proof-card-body { padding: 14px 16px 16px; gap: 7px; }
+    .proof-card-meta { gap: 10px; flex-wrap: wrap; }
+
+    /* ── Entrance animation ── */
+    .proof-card { opacity: 0; transform: translateY(36px); }
+
+    /* ── Lightbox ── */
+    #proof-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,.92);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    @media (max-width: 600px) {
+    #proof-lightbox.open { display: flex; }
+    #proof-lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 10px;
+      object-fit: contain;
+      box-shadow: 0 24px 80px rgba(0,0,0,.9);
+    }
+    #proof-lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+    #proof-lightbox-close:hover { background: rgba(255,255,255,.2); }
+
+    @media (max-width: 900px) {
+      .proof-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
       .proof-grid { grid-template-columns: 1fr; }
       .proof-card-img { height: 200px; }
     }
@@ -159,8 +225,27 @@
 
   </div>
 
+  <!-- Lightbox -->
+  <div id="proof-lightbox" onclick="closeLightbox(event)">
+    <button id="proof-lightbox-close" onclick="closeLightbox()">×</button>
+    <img id="proof-lightbox-img" src="" alt="">
+  </div>
+
   <div id="toast-container"></div>
   <script>
+    function openLightbox(url) {
+      const lb = document.getElementById('proof-lightbox');
+      document.getElementById('proof-lightbox-img').src = url;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      if (e && e.target === document.getElementById('proof-lightbox-img')) return;
+      document.getElementById('proof-lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
     document.addEventListener('DOMContentLoaded', async () => {
       const grid = document.getElementById('proof-grid');
       if (!grid) return;
@@ -175,8 +260,9 @@
       grid.innerHTML = trades.map((t, i) => {
         const date = new Date(t.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         return `
-          <div class="proof-card" onclick="${t.image_url ? `window.open('${t.image_url}','_blank')` : ''}">
-            <div class="proof-card-img" style="${!t.image_url ? 'background:var(--bg3);' : ''}">
+          <div class="proof-card">
+            <div class="proof-card-img" style="${!t.image_url ? 'background:var(--bg3);cursor:default;' : ''}"
+                 ${t.image_url ? `onclick="openLightbox('${t.image_url}')"` : ''}>
               ${t.image_url
                 ? `<img src="${t.image_url}" alt="${t.item}" loading="lazy">`
                 : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;opacity:.25;">
@@ -186,20 +272,34 @@
                     <span style="font-size:.72rem;margin-top:8px;">No screenshot</span>
                   </div>`
               }
-              <span class="proof-delivered-badge">✓ Delivered</span>
+              <div class="aotr-badge-wrap"><span class="aotr-badge">Attack On Titan Revolution</span></div>
             </div>
             <div class="proof-card-body">
               <div class="proof-card-order">Order #AOT-${String(i + 1).padStart(3, '0')}</div>
               <div class="proof-card-item">${t.item}</div>
               <div class="proof-card-meta">
-                <span style="color:var(--text-muted);">${t.game || 'AOTR'}</span>
+                <span style="color:var(--green);font-weight:600;">✓ Delivered</span>
                 <span style="color:var(--gold);font-weight:700;">$${parseFloat(t.price).toFixed(2)}</span>
-                <span style="margin-left:auto;">${date}</span>
+                <span style="margin-left:auto;color:var(--text-faint);font-size:.72rem;">${date}</span>
               </div>
             </div>
           </div>
         `;
       }).join('');
+
+      // Staggered entrance animation
+      const cards = grid.querySelectorAll('.proof-card');
+      cards.forEach((card, i) => {
+        card.style.transition = `opacity .5s ${i * 80}ms ease, transform .5s ${i * 80}ms ease`;
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+            obs.unobserve(card);
+          }
+        }, { threshold: 0.06 });
+        obs.observe(card);
+      });
     });
   </script>
   <script src="https://code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
