@@ -210,9 +210,9 @@ async function loadAdminTrades() {
             : '<span style="color:var(--text-faint);font-size:.75rem;">—</span>'
           }
         </td>
-        <td style="font-weight:600;">${t.username}</td>
+        <td style="font-weight:600;">${t.game || '—'}</td>
         <td style="color:var(--text-muted);">${t.item}</td>
-        <td style="color:var(--gold);font-weight:600;">$${parseFloat(t.price_usd).toFixed(2)}</td>
+        <td style="color:var(--gold);font-weight:600;">$${parseFloat(t.price).toFixed(2)}</td>
         <td style="font-size:.78rem;color:var(--text-faint);">${date}</td>
         <td>
           <button class="btn btn-danger btn-sm" style="font-size:.75rem;padding:4px 8px;" onclick="deleteTrade('${t.id}')">Delete</button>
@@ -279,12 +279,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Add trade form
   document.getElementById('add-trade-btn')?.addEventListener('click', async () => {
     const errEl = document.getElementById('trade-error');
-    const username = document.getElementById('trade-username')?.value.trim();
+    const game = document.getElementById('trade-username')?.value.trim() || 'AOTR';
     const item = document.getElementById('trade-item')?.value.trim();
     const price = parseFloat(document.getElementById('trade-price')?.value) || 0;
     const file = document.getElementById('trade-image')?.files[0];
 
-    if (!username) { errEl.textContent = 'Username is required.'; errEl.classList.add('show'); return; }
     if (!item) { errEl.textContent = 'Item name is required.'; errEl.classList.add('show'); return; }
     if (price <= 0) { errEl.textContent = 'Price must be greater than 0.'; errEl.classList.add('show'); return; }
     errEl.classList.remove('show');
@@ -309,14 +308,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       imageUrl = urlData.publicUrl;
     }
 
-    const { error } = await db.from('trades').insert({ username, item, price_usd: price, image_url: imageUrl });
+    const { error } = await db.from('trades').insert({ game, item, price, image_url: imageUrl });
 
     btn.disabled = false;
     btn.textContent = 'Add Proof';
 
     if (error) { errEl.textContent = error.message; errEl.classList.add('show'); return; }
 
-    showToast(`Proof for ${username} added!`, 'success');
+    showToast(`Proof for "${item}" added!`, 'success');
     document.getElementById('trade-username').value = '';
     document.getElementById('trade-item').value = '';
     document.getElementById('trade-price').value = '';

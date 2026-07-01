@@ -142,8 +142,8 @@
             <div class="proof-card-item">${t.item}</div>
             <div class="proof-card-meta">
               <span style="color:var(--green);">✓ Delivered</span>
-              <span style="color:var(--text-muted);">${t.username}</span>
-              <span>$${parseFloat(t.price_usd).toFixed(2)}</span>
+              <span style="color:var(--text-muted);">${t.game || 'AOTR'}</span>
+              <span>$${parseFloat(t.price).toFixed(2)}</span>
             </div>
           </div>
         </div>
