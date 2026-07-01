@@ -185,6 +185,50 @@ async function deleteAccount(id) {
   else { showToast('Account deleted.', 'success'); loadAdminAccounts(); }
 }
 
+async function loadAdminTrades() {
+  const tbody = document.getElementById('trades-tbody');
+  if (!tbody) return;
+
+  const { data, error } = await db.from('trades').select('*').order('created_at', { ascending: false });
+
+  if (error || !data) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-faint);">Failed to load.</td></tr>';
+    return;
+  }
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-faint);">No trades yet. Add the first one!</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = data.map(t => {
+    const date = new Date(t.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `
+      <tr>
+        <td>
+          ${t.image_url
+            ? `<img src="${t.image_url}" style="width:70px;height:48px;object-fit:cover;border-radius:6px;border:1px solid var(--border);cursor:pointer;" onclick="window.open('${t.image_url}','_blank')" alt="">`
+            : '<span style="color:var(--text-faint);font-size:.75rem;">—</span>'
+          }
+        </td>
+        <td style="font-weight:600;">${t.username}</td>
+        <td style="color:var(--text-muted);">${t.item}</td>
+        <td style="color:var(--gold);font-weight:600;">$${parseFloat(t.price_usd).toFixed(2)}</td>
+        <td style="font-size:.78rem;color:var(--text-faint);">${date}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" style="font-size:.75rem;padding:4px 8px;" onclick="deleteTrade('${t.id}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function deleteTrade(id) {
+  if (!confirm('Delete this trade proof?')) return;
+  const { error } = await db.from('trades').delete().eq('id', id);
+  if (error) showToast('Delete failed: ' + error.message, 'error');
+  else { showToast('Trade deleted.', 'success'); loadAdminTrades(); }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   await new Promise(resolve => setTimeout(resolve, 400));
 
@@ -217,7 +261,68 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (panel === 'orders') loadAdminOrders();
       if (panel === 'items') loadAdminItems();
       if (panel === 'accounts') loadAdminAccounts();
+      if (panel === 'trades') loadAdminTrades();
     });
+  });
+
+  // Image preview for trade form
+  document.getElementById('trade-image')?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview = document.getElementById('trade-img-preview');
+    const thumb = document.getElementById('trade-img-thumb');
+    const reader = new FileReader();
+    reader.onload = (ev) => { thumb.src = ev.target.result; preview.style.display = 'block'; };
+    reader.readAsDataURL(file);
+  });
+
+  // Add trade form
+  document.getElementById('add-trade-btn')?.addEventListener('click', async () => {
+    const errEl = document.getElementById('trade-error');
+    const username = document.getElementById('trade-username')?.value.trim();
+    const item = document.getElementById('trade-item')?.value.trim();
+    const price = parseFloat(document.getElementById('trade-price')?.value) || 0;
+    const file = document.getElementById('trade-image')?.files[0];
+
+    if (!username) { errEl.textContent = 'Username is required.'; errEl.classList.add('show'); return; }
+    if (!item) { errEl.textContent = 'Item name is required.'; errEl.classList.add('show'); return; }
+    if (price <= 0) { errEl.textContent = 'Price must be greater than 0.'; errEl.classList.add('show'); return; }
+    errEl.classList.remove('show');
+
+    const btn = document.getElementById('add-trade-btn');
+    btn.disabled = true;
+    btn.textContent = 'Uploading...';
+
+    let imageUrl = null;
+    if (file) {
+      const ext = file.name.split('.').pop();
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: uploadErr } = await db.storage.from('proofs').upload(path, file, { upsert: false });
+      if (uploadErr) {
+        errEl.textContent = 'Image upload failed: ' + uploadErr.message;
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Add Proof';
+        return;
+      }
+      const { data: urlData } = db.storage.from('proofs').getPublicUrl(path);
+      imageUrl = urlData.publicUrl;
+    }
+
+    const { error } = await db.from('trades').insert({ username, item, price_usd: price, image_url: imageUrl });
+
+    btn.disabled = false;
+    btn.textContent = 'Add Proof';
+
+    if (error) { errEl.textContent = error.message; errEl.classList.add('show'); return; }
+
+    showToast(`Proof for ${username} added!`, 'success');
+    document.getElementById('trade-username').value = '';
+    document.getElementById('trade-item').value = '';
+    document.getElementById('trade-price').value = '';
+    document.getElementById('trade-image').value = '';
+    document.getElementById('trade-img-preview').style.display = 'none';
+    loadAdminTrades();
   });
 
   // Add item form

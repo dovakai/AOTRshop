@@ -208,3 +208,9 @@ async function fetchReviews(limit = null) {
   return query;
 }
 
+async function fetchTrades(limit = 10) {
+  let query = db.from('trades').select('*').order('created_at', { ascending: false });
+  if (limit) query = query.limit(limit);
+  return query;
+}
+
