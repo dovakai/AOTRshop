@@ -141,7 +141,8 @@ async function fetchItems(filters = {}) {
       items = items.filter(i => i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q));
     }
     if (filters.sort === 'price_asc') items.sort((a, b) => a.price_usd - b.price_usd);
-    if (filters.sort === 'price_desc') items.sort((a, b) => b.price_usd - a.price_usd);
+    else if (filters.sort === 'price_desc') items.sort((a, b) => b.price_usd - a.price_usd);
+    else items.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0));
     return { data: items, error: null };
   }
 
@@ -151,6 +152,7 @@ async function fetchItems(filters = {}) {
   if (filters.search) query = query.ilike('name', `%${filters.search}%`);
   if (filters.sort === 'price_asc') query = query.order('price_usd', { ascending: true });
   else if (filters.sort === 'price_desc') query = query.order('price_usd', { ascending: false });
+  else query = query.order('is_featured', { ascending: false });
   return query;
 }
 
