@@ -104,6 +104,7 @@ async function loadFavorites() {
             ? `<img class="item-img" src="${data.image_url}" alt="${data.name}" loading="lazy">`
             : `<div class="item-img-placeholder"><span>${data.category}</span></div>`
           }
+          <div class="aotr-corner-badge-wrap"><span class="aotr-corner-badge">Attack On Titan Revolution</span></div>
         </div>
         <div class="item-body">
           <span class="item-cat">${data.category}</span>

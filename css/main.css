@@ -994,6 +994,35 @@ h4 { font-size: .95rem; font-weight: 600; }
   border: 1px solid rgba(240,180,41,0.2);
 }
 
+/* AOTR animated corner badge (top-right) */
+.aotr-corner-badge-wrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 5px;
+  padding: 1.5px;
+  background: linear-gradient(90deg, #7a0000, #c0392b, #ff4500, #ff7043, #c0392b, #7a0000);
+  background-size: 300% 100%;
+  animation: aotr-corner-shimmer 2.5s linear infinite;
+  z-index: 2;
+}
+.aotr-corner-badge {
+  display: block;
+  background: rgba(6,6,10,.92);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: .56rem;
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+@keyframes aotr-corner-shimmer {
+  0%   { background-position: 0%   50%; }
+  100% { background-position: 300% 50%; }
+}
+
 @keyframes badge-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
