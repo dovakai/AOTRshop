@@ -216,3 +216,8 @@ async function fetchTrades(limit = 10) {
   return query;
 }
 
+async function fetchTradesCount() {
+  const { count, error } = await db.from('trades').select('*', { count: 'exact', head: true });
+  return { count, error };
+}
+

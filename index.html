@@ -83,7 +83,7 @@
 
           <div class="hero-stats">
             <div class="hero-stat">
-              <span class="hero-stat-val">25+</span>
+              <span class="hero-stat-val" id="hero-orders-count">—</span>
               <span class="hero-stat-label">Orders Delivered</span>
             </div>
             <div class="hero-stat">
@@ -604,6 +604,12 @@
       }
 
       const { data: trades } = await fetchTrades(10);
+
+      const heroOrdersEl = document.getElementById('hero-orders-count');
+      if (heroOrdersEl) {
+        const { count } = await fetchTradesCount();
+        heroOrdersEl.textContent = count ?? trades?.length ?? 0;
+      }
 
       // Live proofs slider
       const slider = document.getElementById('proofs-slider');

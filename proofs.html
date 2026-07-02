@@ -144,7 +144,7 @@
       <!-- Stats row -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:40px;">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
-          <div style="font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:-.04em;">500+</div>
+          <div id="proof-orders-count" style="font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:-.04em;">—</div>
           <div style="font-size:.75rem;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;">Orders Completed</div>
         </div>
         <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
@@ -251,6 +251,12 @@
       if (!grid) return;
 
       const { data: trades, error } = await fetchTrades(50);
+
+      const countEl = document.getElementById('proof-orders-count');
+      if (countEl) {
+        const { count } = await fetchTradesCount();
+        countEl.textContent = count ?? trades?.length ?? 0;
+      }
 
       if (error || !trades || !trades.length) {
         grid.innerHTML = '<div style="text-align:center;padding:64px 24px;color:var(--text-faint);grid-column:1/-1;">No proofs uploaded yet. Check back soon!</div>';
