@@ -81,6 +81,7 @@ async function loadAdminItems() {
     tbody.innerHTML = PLACEHOLDER_ITEMS.map(item => `
       <tr>
         <td style="font-weight:500;color:var(--text);">${item.name}</td>
+        <td style="font-size:.78rem;color:var(--text-muted);">${item.game || 'AOTR'}</td>
         <td><span class="badge-cat item-badge" style="position:static;display:inline-block;">${item.category}</span></td>
         <td style="color:var(--gold);">$${item.price_usd.toFixed(2)}</td>
         <td style="font-size:.78rem;">${[item.required_gems > 0 ? item.required_gems + ' gems' : null, item.required_gold > 0 ? item.required_gold + ' gold' : null].filter(Boolean).join(' / ') || '—'}</td>
@@ -93,11 +94,12 @@ async function loadAdminItems() {
   }
 
   const { data, error } = await db.from('items').select('*').order('created_at', { ascending: false });
-  if (error || !data) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-faint);">Failed to load.</td></tr>'; return; }
+  if (error || !data) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-faint);">Failed to load.</td></tr>'; return; }
 
   tbody.innerHTML = data.map(item => `
     <tr>
       <td style="font-weight:500;color:var(--text);">${item.name}</td>
+      <td style="font-size:.78rem;color:var(--text-muted);">${item.game || 'AOTR'}</td>
       <td>${item.category}</td>
       <td style="color:var(--gold);">$${item.price_usd.toFixed(2)}</td>
       <td style="font-size:.78rem;">${[item.required_gems > 0 ? item.required_gems + ' gems' : null, item.required_gold > 0 ? item.required_gold + ' gold' : null].filter(Boolean).join(' / ') || '—'}</td>
@@ -328,6 +330,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('add-item-btn')?.addEventListener('click', async () => {
     const errEl = document.getElementById('add-item-error');
     const name = document.getElementById('new-name')?.value.trim();
+    const game = document.getElementById('new-game')?.value || 'AOTR';
     const cat = document.getElementById('new-cat')?.value;
     const desc = document.getElementById('new-desc')?.value.trim();
     const price = parseFloat(document.getElementById('new-price')?.value) || 0;
@@ -344,7 +347,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (SUPABASE_URL === 'YOUR_SUPABASE_URL') { showToast('Connect Supabase to add items.', 'error'); return; }
 
     const { error } = await db.from('items').insert({
-      name, category: cat, description: desc, price_usd: price,
+      name, game, category: cat, description: desc, price_usd: price,
       required_prestige: prestige, required_gems: gems, required_gold: gold,
       image_url: image, in_stock: true, is_featured: featured
     });

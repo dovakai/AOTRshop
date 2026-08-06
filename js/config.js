@@ -84,6 +84,7 @@ const PLACEHOLDER_ITEMS = [
     image_url: null, in_stock: true, is_featured: false, rating: 4.4, review_count: 43
   }
 ];
+PLACEHOLDER_ITEMS.forEach(i => { if (!i.game) i.game = 'AOTR'; });
 
 const PLACEHOLDER_ACCOUNTS = [
   {
@@ -135,6 +136,7 @@ async function fetchItems(filters = {}) {
   if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
     let items = [...PLACEHOLDER_ITEMS];
     if (filters.category) items = items.filter(i => i.category === filters.category);
+    if (filters.game) items = items.filter(i => i.game === filters.game);
     if (filters.featured) items = items.filter(i => i.is_featured);
     if (filters.search) {
       const q = filters.search.toLowerCase();
@@ -148,6 +150,7 @@ async function fetchItems(filters = {}) {
 
   let query = db.from('items').select('*').eq('in_stock', true);
   if (filters.category) query = query.eq('category', filters.category);
+  if (filters.game) query = query.eq('game', filters.game);
   if (filters.featured) query = query.eq('is_featured', true);
   if (filters.search) query = query.ilike('name', `%${filters.search}%`);
   if (filters.sort === 'price_asc') query = query.order('price_usd', { ascending: true });
@@ -219,5 +222,30 @@ async function fetchTrades(limit = 10) {
 async function fetchTradesCount() {
   const { count, error } = await db.from('trades').select('*', { count: 'exact', head: true });
   return { count, error };
+}
+
+// ── Multi-game badges ─────────────────────────────────────────────────────
+const GAME_BADGES = {
+  'AOTR':             { label: 'Attack On Titan Revolution', gradient: '#7a0000, #c0392b, #ff4500, #ff7043, #c0392b, #7a0000' },
+  'Blox Fruits':       { label: 'Blox Fruits',                gradient: '#0a3d5c, #1f7fb8, #4fc3f7, #7fd4f7, #1f7fb8, #0a3d5c' },
+  'YBA':               { label: 'Your Bizarre Adventure',     gradient: '#3b0a5c, #7b2fbf, #c04fe0, #d98cf0, #7b2fbf, #3b0a5c' },
+  'AUT':               { label: 'A Universal Time',           gradient: '#053b3f, #0e8a8f, #2fd9d0, #7ff0e8, #0e8a8f, #053b3f' },
+  'Bridger: Western':  { label: 'Bridger: Western',           gradient: '#4a2c05, #a15c0f, #e0912b, #f0b95c, #a15c0f, #4a2c05' }
+};
+
+function gameBadgeMeta(game) {
+  return GAME_BADGES[game] || GAME_BADGES['AOTR'];
+}
+
+// Top-right corner badge used on item cards (shop.js, index.html, profile.js)
+function renderGameBadge(game) {
+  const meta = gameBadgeMeta(game);
+  return `<div class="game-badge-wrap" style="background:linear-gradient(90deg, ${meta.gradient});background-size:300% 100%;"><span class="game-badge">${meta.label}</span></div>`;
+}
+
+// Top-left badge used on proofs.html trade cards
+function renderTradeBadge(game) {
+  const meta = gameBadgeMeta(game);
+  return `<div class="aotr-badge-wrap" style="background:linear-gradient(90deg, ${meta.gradient});background-size:300% 100%;"><span class="aotr-badge">${meta.label}</span></div>`;
 }
 

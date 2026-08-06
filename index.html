@@ -226,6 +226,40 @@
 
     </div><!-- /container -->
 
+    <!-- ══ GAMES ═════════════════════════════════════════════════════════════ -->
+    <section style="padding:44px 0;">
+      <div class="container">
+        <div class="section-header" style="margin-bottom:20px;">
+          <h2 class="section-title">
+            <span class="section-title-accent"></span>
+            Browse by Game
+          </h2>
+        </div>
+        <div class="categories-grid">
+          <a href="/shop.html?game=AOTR" class="cat-card" style="border-top:2px solid #c0392b;">
+            <span class="cat-name" style="font-size:1.4rem;font-weight:800;">AOT</span>
+            <span class="cat-name">Attack On Titan Revolution</span>
+          </a>
+          <a href="/shop.html?game=Blox Fruits" class="cat-card" style="border-top:2px solid #1f7fb8;">
+            <span class="cat-name" style="font-size:1.4rem;font-weight:800;">BF</span>
+            <span class="cat-name">Blox Fruits</span>
+          </a>
+          <a href="/shop.html?game=YBA" class="cat-card" style="border-top:2px solid #7b2fbf;">
+            <span class="cat-name" style="font-size:1.4rem;font-weight:800;">YBA</span>
+            <span class="cat-name">Your Bizarre Adventure</span>
+          </a>
+          <a href="/shop.html?game=AUT" class="cat-card" style="border-top:2px solid #0e8a8f;">
+            <span class="cat-name" style="font-size:1.4rem;font-weight:800;">AUT</span>
+            <span class="cat-name">A Universal Time</span>
+          </a>
+          <a href="/shop.html?game=Bridger: Western" class="cat-card" style="border-top:2px solid #a15c0f;">
+            <span class="cat-name" style="font-size:1.4rem;font-weight:800;">BW</span>
+            <span class="cat-name">Bridger: Western</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- ══ CATEGORIES ════════════════════════════════════════════════════════ -->
     <section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:44px 0;">
       <div class="container">
@@ -514,7 +548,7 @@
             }
             ${item.is_featured ? '<span class="item-badge badge-hot">HOT</span>' : '<span class="item-badge badge-new">NEW</span>'}
             ${!item.in_stock ? '<span class="item-badge badge-oos" style="left:auto;right:8px;top:8px;">OOS</span>' : ''}
-            <div class="aotr-corner-badge-wrap"><span class="aotr-corner-badge">Attack On Titan Revolution</span></div>
+            ${renderGameBadge(item.game)}
             <button class="item-fav-btn" onclick="event.stopPropagation();toggleFav('${item.id}')" title="Favorite">
               <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>

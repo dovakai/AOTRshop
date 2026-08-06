@@ -1,6 +1,6 @@
 // Shop page logic
 
-let shopFilters = { category: '', sort: '', search: '' };
+let shopFilters = { category: '', game: '', sort: '', search: '' };
 
 function renderItemCard(item) {
   const { rating, count } = getItemRating(item);
@@ -23,7 +23,7 @@ function renderItemCard(item) {
         }
         ${item.is_featured ? '<span class="item-badge badge-hot">HOT</span>' : ''}
         ${!item.in_stock ? '<span class="item-badge badge-oos">Out of Stock</span>' : ''}
-        <div class="aotr-corner-badge-wrap"><span class="aotr-corner-badge">Attack On Titan Revolution</span></div>
+        ${renderGameBadge(item.game)}
         <button class="item-fav-btn" onclick="event.stopPropagation();toggleFav('${item.id}')" title="Add to favorites" id="fav-${item.id}">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -84,6 +84,12 @@ function updateActiveFilters() {
   const el = document.getElementById('active-filters');
   if (!el) return;
   const chips = [];
+  if (shopFilters.game) {
+    chips.push(`<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--gold-dim);border:1px solid rgba(201,168,76,.2);border-radius:99px;font-size:.75rem;color:var(--gold);">
+      ${shopFilters.game}
+      <button onclick="clearFilter('game')" style="background:none;border:none;color:inherit;cursor:pointer;line-height:1;font-size:12px;">&times;</button>
+    </span>`);
+  }
   if (shopFilters.category) {
     chips.push(`<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--gold-dim);border:1px solid rgba(201,168,76,.2);border-radius:99px;font-size:.75rem;color:var(--gold);">
       ${shopFilters.category}
@@ -103,6 +109,7 @@ function updateActiveFilters() {
 function clearFilter(key) {
   shopFilters[key] = '';
   // Reset radio
+  if (key === 'game') document.querySelector('input[name=game][value=""]').checked = true;
   if (key === 'category') document.querySelector('input[name=cat][value=""]').checked = true;
   if (key === 'sort') document.querySelector('input[name=sort][value=""]').checked = true;
   updateActiveFilters();
@@ -141,6 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const radio = document.querySelector(`input[name=cat][value="${catParam}"]`);
     if (radio) radio.checked = true;
   }
+  const gameParam = params.get('game') || '';
+  if (gameParam) {
+    shopFilters.game = gameParam;
+    const gameRadio = document.querySelector(`input[name=game][value="${gameParam}"]`);
+    if (gameRadio) gameRadio.checked = true;
+  }
+
+  // Game filter
+  document.querySelectorAll('input[name=game]').forEach(el => {
+    el.addEventListener('change', () => {
+      shopFilters.game = el.value;
+      updateActiveFilters();
+      loadItems();
+    });
+  });
 
   // Category filter
   document.querySelectorAll('input[name=cat]').forEach(el => {
@@ -172,7 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Reset
   document.getElementById('reset-filters')?.addEventListener('click', () => {
-    shopFilters = { category: '', sort: '', search: '' };
+    shopFilters = { category: '', game: '', sort: '', search: '' };
+    document.querySelector('input[name=game][value=""]').checked = true;
     document.querySelector('input[name=cat][value=""]').checked = true;
     document.querySelector('input[name=sort][value=""]').checked = true;
     const searchEl = document.getElementById('shop-search');
