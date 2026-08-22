@@ -666,7 +666,7 @@
                 <div style="font-size:.78rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.item}</div>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:5px;">
                   <span style="font-size:.7rem;color:var(--text-muted);">${t.game || 'AOTR'}</span>
-                  <span style="font-size:.78rem;font-weight:700;color:var(--gold);">$${parseFloat(t.price).toFixed(2)}</span>
+                  <span style="font-size:.78rem;font-weight:700;color:var(--gold);">${t.price ? '$' + parseFloat(t.price).toFixed(2) : '★ Review'}</span>
                 </div>
               </div>
             </a>
@@ -680,7 +680,7 @@
       const tickerTrack = document.getElementById('ticker-track');
       if (tickerTrack && trades && trades.length) {
         const entries = trades.map(t =>
-          `<span class="ticker-entry"><strong>${t.game || 'AOTR'}</strong> · <strong>${t.item}</strong> <span class="tprice">$${parseFloat(t.price).toFixed(2)}</span> <span class="tsep">·</span> ${tradeTimeAgo(t.created_at)}</span>`
+          `<span class="ticker-entry"><strong>${t.game || 'AOTR'}</strong> · <strong>${t.item}</strong> <span class="tprice">${t.price ? '$' + parseFloat(t.price).toFixed(2) : '★ Review'}</span> <span class="tsep">·</span> ${tradeTimeAgo(t.created_at)}</span>`
         );
         tickerTrack.innerHTML = [...entries, ...entries].join('');
       }

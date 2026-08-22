@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /chat.html
+Disallow: /cart.html
+Disallow: /success.html
+Disallow: /failed.html
+Disallow: /profile.html
+
+Sitemap: https://aotrshop.vercel.app/sitemap.xml

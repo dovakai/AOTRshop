@@ -131,12 +131,20 @@ const PLACEHOLDER_REVIEWS = [
   }
 ];
 
+// Only AOTR is a live catalog for now — other games' items stay in the DB
+// (untouched, for later) but are hidden from the storefront until finished.
+const LIVE_GAME = 'AOTR';
+
 // Utility: get items from Supabase, fall back to placeholders
 async function fetchItems(filters = {}) {
+  const requestedGame = filters.game || LIVE_GAME;
+  if (requestedGame !== LIVE_GAME) {
+    return { data: [], error: null };
+  }
+
   if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
-    let items = [...PLACEHOLDER_ITEMS];
+    let items = PLACEHOLDER_ITEMS.filter(i => (i.game || LIVE_GAME) === LIVE_GAME);
     if (filters.category) items = items.filter(i => i.category === filters.category);
-    if (filters.game) items = items.filter(i => i.game === filters.game);
     if (filters.featured) items = items.filter(i => i.is_featured);
     if (filters.search) {
       const q = filters.search.toLowerCase();
@@ -148,9 +156,8 @@ async function fetchItems(filters = {}) {
     return { data: items, error: null };
   }
 
-  let query = db.from('items').select('*').eq('in_stock', true);
+  let query = db.from('items').select('*').eq('in_stock', true).eq('game', LIVE_GAME);
   if (filters.category) query = query.eq('category', filters.category);
-  if (filters.game) query = query.eq('game', filters.game);
   if (filters.featured) query = query.eq('is_featured', true);
   if (filters.search) query = query.ilike('name', `%${filters.search}%`);
   if (filters.sort === 'price_asc') query = query.order('price_usd', { ascending: true });

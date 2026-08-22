@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bridger: Western Shop — Buy Stands | AOTRShop</title>
+  <meta name="description" content="Buy Bridger: Western stands — D4C, White Snake, Star Platinum, The World, Tusk. Fast delivery, secure USDT checkout.">
+  <link rel="canonical" href="https://aotrshop.vercel.app/bridger-western">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <meta name="trustpilot-one-time-domain-verification-id" content="9e197152-6270-4623-a242-e3dfde22233b"/>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body data-page="shop">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/cart.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nav.js"></script>
+  <script>window.PRESET_GAME = 'Bridger: Western';</script>
+
+  <div style="padding-top:58px;">
+    <div class="container" style="padding-top:36px;padding-bottom:16px;">
+      <h1 style="font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;">Bridger: Western Stand Shop</h1>
+      <p style="color:var(--text-muted);font-size:.9rem;max-width:720px;line-height:1.6;">
+        Buy Bridger: Western stands with fast manual delivery or automatic USDT crypto checkout.
+        Stock includes D4C, White Snake, Star Platinum, The World and Tusk. Trusted seller with live
+        delivery proofs and Discord support.
+      </p>
+    </div>
+    <div class="container" style="padding-bottom:60px;">
+
+      <div class="shop-layout">
+
+        <!-- ── Filter Sidebar ──────────────────────────────────────────── -->
+        <aside class="filter-sidebar">
+          <div class="filter-section">
+            <p class="filter-title">Category</p>
+            <label class="filter-option"><input type="radio" name="cat" value="" checked> All Items</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Stands"> Stands</label>
+            <label class="filter-option"><input type="radio" name="cat" value="Market Items"> Market Items</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <div class="filter-section">
+            <p class="filter-title">Sort By Price</p>
+            <label class="filter-option"><input type="radio" name="sort" value="" checked> Default</label>
+            <label class="filter-option"><input type="radio" name="sort" value="price_asc"> Low to High</label>
+            <label class="filter-option"><input type="radio" name="sort" value="price_desc"> High to Low</label>
+          </div>
+
+          <div class="filter-separator"></div>
+
+          <button class="btn btn-ghost btn-full" id="reset-filters" style="font-size:.8rem;justify-content:flex-start;padding:8px 0;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            Reset Filters
+          </button>
+        </aside>
+
+        <!-- ── Items Main ──────────────────────────────────────────────── -->
+        <div>
+          <div class="shop-top">
+            <div class="shop-search-wrap">
+              <svg class="shop-search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
+              </svg>
+              <input type="text" class="shop-search" id="shop-search" placeholder="Search Bridger: Western stands...">
+            </div>
+            <span class="shop-count" id="shop-count"></span>
+          </div>
+
+          <!-- Active filter chips -->
+          <div id="active-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;"></div>
+
+          <div class="items-grid" id="items-grid">
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+            <div class="skeleton" style="aspect-ratio:1;border-radius:10px;"></div>
+          </div>
+
+          <div id="no-items" style="display:none;text-align:center;padding:60px 0;">
+            <p style="color:var(--text-faint);font-size:.9rem;">No items match your filters.</p>
+            <button class="btn btn-outline btn-sm" style="margin-top:16px;" onclick="document.getElementById('reset-filters').click()">Clear Filters</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/animate.js"></script>
+  <script src="/js/shop.js"></script>
+  <script src="https://code.tidio.co/1tjjpqufzpyjzjbajo7lh1jyknm34hoj.js" async></script>
+</body>
+</html>
